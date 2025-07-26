@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wholesaler Dashboard - StreetFood Connect</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Use the Poppins font family */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-white dark:bg-gray-800 shadow-lg flex-shrink-0 flex flex-col fixed inset-y-0 left-0 z-50 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Logo and Brand -->
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-teal-600">StreetFood Connect</a>
+                <button id="close-sidebar-btn" class="md:hidden text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <!-- Profile Section -->
+            <div class="p-6 flex items-center space-x-4 border-b border-gray-200 dark:border-gray-700">
+                <img class="h-12 w-12 rounded-full" src="https://placehold.co/100x100/4fd1c5/ffffff?text=SG" alt="Suresh Gupta's profile picture">
+                <div>
+                    <p class="font-semibold text-gray-800 dark:text-white">Suresh Gupta</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Wholesaler</p>
+                </div>
+            </div>
+            <!-- Navigation -->
+            <nav id="main-nav" class="flex-1 px-4 py-4">
+                <a href="#nearby-shops" class="nav-link flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-semibold rounded-lg">
+                    <i class="fas fa-store w-6 text-center"></i><span class="ml-4">Nearby Shops</span>
+                </a>
+                <a href="#sales" class="nav-link flex items-center mt-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-chart-line w-6 text-center"></i><span class="ml-4">My Sales</span>
+                </a>
+                <a href="#profile" class="nav-link flex items-center mt-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-user-circle w-6 text-center"></i><span class="ml-4">Profile</span>
+                </a>
+            </nav>
+            <!-- Logout -->
+            <div class="px-4 py-4 border-t border-gray-200 dark:border-gray-700">
+                 <a href="#" class="flex items-center px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg">
+                    <i class="fas fa-sign-out-alt w-6 text-center"></i><span class="ml-4">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col">
+            <!-- Top Bar (for mobile) -->
+            <header class="md:hidden bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
+                <button id="hamburger-btn" class="text-gray-600 dark:text-gray-300">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                <h1 id="page-title-mobile" class="text-xl font-bold text-gray-800 dark:text-white">Nearby Shops</h1>
+                <div class="w-8"></div> <!-- Spacer -->
+            </header>
+
+            <!-- Content Area -->
+            <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+                <!-- Page: Nearby Shops -->
+                <div id="page-nearby-shops" class="page-content">
+                    <header class="mb-8 hidden md:block">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Nearby Food Vendors</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">Discover shops in your area looking for supplies.</p>
+                    </header>
+                    <div class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+                        <div class="grid md:grid-cols-3 gap-6 items-end">
+                            <div class="md:col-span-2">
+                                <label for="search-shops" class="text-sm font-medium text-gray-700 dark:text-gray-300">Search by Shop Name or Area</label>
+                                <div class="relative mt-1"><input type="text" id="search-shops" placeholder="e.g., Gupta Chaat or Connaught Place" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2.5 pl-10 pr-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="fas fa-search text-gray-400"></i></div></div>
+                            </div>
+                            <div>
+                                <label for="filter-supply" class="text-sm font-medium text-gray-700 dark:text-gray-300">Filter by Supply Needed</label>
+                                <select id="filter-supply" class="mt-1 w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2.5 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"><option>All Supplies</option><option>Fresh Produce</option><option>Dairy Products</option><option>Spices</option><option>Grains & Flours</option><option>Oils & Sauces</option><option>Packaging</option></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <!-- Shop Card 1 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center space-x-6 transition-shadow hover:shadow-xl">
+                            <img class="h-32 w-32 rounded-lg object-cover" src="https://placehold.co/400x400/f59e0b/333333?text=Chaat+Stall" alt="Gupta Chaat Corner">
+                            <div class="flex-1">
+                                <a href="guptachatprofile.html" class="text-xl font-bold text-teal-600 hover:underline">Gupta Chaat Corner</a>
+                                <p class="text-gray-500 dark:text-gray-400 mt-1"><i class="fas fa-map-marker-alt fa-fw mr-2 text-gray-400"></i>Connaught Place, New Delhi</p>
+                                <div class="mt-3">
+                                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Looking for:</p>
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-1 rounded-full dark:bg-teal-900 dark:text-teal-300">Fresh Produce</span>
+                                        <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-1 rounded-full dark:bg-teal-900 dark:text-teal-300">Spices</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="guptachatprofile.html" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 self-center">
+                                View Details
+                            </a>
+                        </div>
+                        <!-- Shop Card 2 -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 flex items-center space-x-6 transition-shadow hover:shadow-xl">
+                            <img class="h-32 w-32 rounded-lg object-cover" src="https://placehold.co/400x400/ec4899/ffffff?text=Sweets+Shop" alt="Sharma Sweets & Snacks">
+                            <div class="flex-1">
+                                <a href="Sharma-shop.html" class="text-xl font-bold text-teal-600 hover:underline">Sharma Sweets & Snacks</a>
+                                <p class="text-gray-500 dark:text-gray-400 mt-1"><i class="fas fa-map-marker-alt fa-fw mr-2 text-gray-400"></i>Karol Bagh, New Delhi</p>
+                                <div class="mt-3">
+                                    <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Looking for:</p>
+                                    <div class="flex flex-wrap gap-2 mt-2">
+                                        <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-1 rounded-full dark:bg-teal-900 dark:text-teal-300">Dairy Products</span>
+                                        <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-1 rounded-full dark:bg-teal-900 dark:text-teal-300">Grains & Flours</span>
+                                        <span class="bg-teal-100 text-teal-800 text-xs font-medium px-2.5 py-1 rounded-full dark:bg-teal-900 dark:text-teal-300">Packaging</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="Sharma-shop.html" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105 self-center">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page: My Sales -->
+                <div id="page-sales" class="page-content hidden">
+                    <header class="mb-8 hidden md:block">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sales Dashboard</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">Track your performance and growth.</p>
+                    </header>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h4 class="text-gray-500 dark:text-gray-400 font-medium">Total Revenue</h4><p class="text-3xl font-bold text-teal-600 mt-1">₹1,25,430</p></div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h4 class="text-gray-500 dark:text-gray-400 font-medium">New Customers</h4><p class="text-3xl font-bold text-teal-600 mt-1">12</p></div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h4 class="text-gray-500 dark:text-gray-400 font-medium">Orders This Month</h4><p class="text-3xl font-bold text-teal-600 mt-1">84</p></div>
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow"><h4 class="text-gray-500 dark:text-gray-400 font-medium">Avg. Order Value</h4><p class="text-3xl font-bold text-teal-600 mt-1">₹1,493</p></div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                        <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-4">Monthly Revenue</h3>
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Page: Profile -->
+                <div id="page-profile" class="page-content hidden">
+                    <header class="mb-8 hidden md:block">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">My Profile</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">View and update your business information.</p>
+                    </header>
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow">
+                        <form action="#" method="POST">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 border-b border-gray-300 dark:border-gray-600 pb-2 mb-6">Your Details</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div><label for="profile-owner-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Full Name</label><input type="text" id="profile-owner-name" value="Suresh Gupta" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"></div>
+                                <div><label for="profile-phone-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Contact Number</label><input type="tel" id="profile-phone-number" value="9876543210" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"></div>
+                            </div>
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 border-b border-gray-300 dark:border-gray-600 pb-2 mb-6">Business Details</h2>
+                            <div class="grid grid-cols-1 gap-6">
+                                <div><label for="profile-business-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Business Name</label><input type="text" id="profile-business-name" value="Gupta Wholesale Traders" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"></div>
+                                <div><label for="profile-business-address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Business Address</label><input type="text" id="profile-business-address" value="Warehouse Address, City, Pincode" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500"></div>
+                                <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Supplies you sell</label><div class="grid grid-cols-2 md:grid-cols-3 gap-4"><label class="flex items-center space-x-3 p-2 rounded-lg"><input type="checkbox" checked class="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"> <span class="text-gray-700 dark:text-gray-300">Fresh Produce</span></label><label class="flex items-center space-x-3 p-2 rounded-lg"><input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"> <span class="text-gray-700 dark:text-gray-300">Dairy Products</span></label><label class="flex items-center space-x-3 p-2 rounded-lg"><input type="checkbox" checked class="h-5 w-5 rounded border-gray-300 text-teal-600 focus:ring-teal-500"> <span class="text-gray-700 dark:text-gray-300">Spices</span></label></div></div>
+                            </div>
+                            <div class="mt-8 text-right"><button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg transition-transform transform hover:scale-105">Save Changes</button></div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Elements ---
+            const sidebar = document.getElementById('sidebar');
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-content');
+            const pageTitleMobile = document.getElementById('page-title-mobile');
+            
+            // --- Sidebar Toggle ---
+            function openSidebar() { sidebar.classList.remove('-translate-x-full'); }
+            function closeSidebar() { sidebar.classList.add('-translate-x-full'); }
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebar);
+            if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+
+            // --- Page Navigation ---
+            function showPage(targetId) {
+                pages.forEach(page => page.classList.add('hidden'));
+                const targetPage = document.getElementById(targetId);
+                if (targetPage) targetPage.classList.remove('hidden');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-white', 'font-semibold');
+                    link.classList.add('text-gray-600', 'dark:text-gray-300');
+                    if (link.getAttribute('href') === `#${targetId.replace('page-', '')}`) {
+                        link.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-800', 'dark:text-white', 'font-semibold');
+                        link.classList.remove('text-gray-600', 'dark:text-gray-300');
+                        if(pageTitleMobile) pageTitleMobile.textContent = link.querySelector('span').textContent;
+                    }
+                });
+                if (window.innerWidth < 768) closeSidebar();
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = `page-${this.getAttribute('href').substring(1)}`;
+                    showPage(targetId);
+                });
+            });
+
+            // --- Sales Chart ---
+            const salesChartCanvas = document.getElementById('salesChart');
+            if (salesChartCanvas) {
+                const salesChartCtx = salesChartCanvas.getContext('2d');
+                new Chart(salesChartCtx, {
+                    type: 'line',
+                    data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], datasets: [{ label: 'Revenue (in ₹)', data: [12000, 19000, 15000, 25000, 22000, 30000, 28000], borderColor: '#0d9488', backgroundColor: 'rgba(13, 148, 136, 0.1)', tension: 0.4, fill: true }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                });
+            }
+            
+            // Show initial page based on URL hash or default
+            const initialPage = window.location.hash ? `page-${window.location.hash.substring(1)}` : 'page-nearby-shops';
+            showPage(initialPage);
+        });
+    </script>
+</body>
+</html>

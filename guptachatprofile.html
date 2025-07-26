@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Details - StreetFood Connect</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" xintegrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-teal-600">StreetFood Connect</a>
+            <a href="retailer-dashboard.html" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+        <!-- Shop Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 dark:text-white">Gupta Chaat Corner</h1>
+            <p class="text-lg text-gray-500 dark:text-gray-400 mt-1"><i class="fas fa-map-marker-alt fa-fw mr-2"></i>Connaught Place, New Delhi</p>
+        </div>
+
+        <!-- Image Gallery -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="md:col-span-2">
+                <img src="https://placehold.co/800x500/f59e0b/333333?text=Main+Shop+View" class="rounded-lg w-full h-full object-cover shadow-lg">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <img src="https://placehold.co/400x400/f59e0b/333333?text=Food+Prep" class="rounded-lg w-full h-full object-cover shadow-lg">
+                <img src="https://placehold.co/400x400/f59e0b/333333?text=Menu" class="rounded-lg w-full h-full object-cover shadow-lg">
+                <img src="https://placehold.co/400x400/f59e0b/333333?text=Happy+Customer" class="rounded-lg w-full h-full object-cover shadow-lg">
+                <img src="https://placehold.co/400x400/f59e0b/333333?text=Stall+Front" class="rounded-lg w-full h-full object-cover shadow-lg">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Details & Needs -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Business Details -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Business Details</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-600 dark:text-gray-300">
+                        <p><i class="fas fa-user fa-fw mr-2 text-gray-400"></i><strong>Owner:</strong> Ramesh Kumar</p>
+                        <p><i class="fas fa-phone fa-fw mr-2 text-gray-400"></i><strong>Contact:</strong> 9876543210</p>
+                        <p class="md:col-span-2"><i class="fas fa-map-marked-alt fa-fw mr-2 text-gray-400"></i><strong>Address:</strong> 123, ABC Market, Connaught Place, New Delhi - 110001</p>
+                        <p class="md:col-span-2"><i class="fas fa-clock fa-fw mr-2 text-gray-400"></i><strong>Hours:</strong> 11:00 AM - 10:00 PM (Mon-Sun)</p>
+                    </div>
+                </div>
+
+                <!-- Supplies Needed -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Current Needs</h2>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-teal-100 text-teal-800 text-lg font-medium px-4 py-2 rounded-full dark:bg-teal-900 dark:text-teal-300">Fresh Produce</span>
+                        <span class="bg-teal-100 text-teal-800 text-lg font-medium px-4 py-2 rounded-full dark:bg-teal-900 dark:text-teal-300">Spices</span>
+                        <span class="bg-gray-200 text-gray-800 text-lg font-medium px-4 py-2 rounded-full dark:bg-gray-700 dark:text-gray-300">Packaging</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Sales History -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Order History</h2>
+                <div>
+                    <canvas id="pastSalesChart" height="200"></canvas>
+                </div>
+                <ul class="space-y-4 mt-6">
+                    <li class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                        <div>
+                            <p class="font-semibold">Order #12345</p>
+                            <p class="text-sm text-gray-500">20 Jul 2025</p>
+                        </div>
+                        <p class="font-bold text-green-600">₹2,500</p>
+                    </li>
+                    <li class="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-2">
+                        <div>
+                            <p class="font-semibold">Order #12301</p>
+                            <p class="text-sm text-gray-500">13 Jul 2025</p>
+                        </div>
+                        <p class="font-bold text-green-600">₹1,800</p>
+                    </li>
+                    <li class="flex justify-between items-center">
+                        <div>
+                            <p class="font-semibold">Order #12256</p>
+                            <p class="text-sm text-gray-500">05 Jul 2025</p>
+                        </div>
+                        <p class="font-bold text-green-600">₹2,100</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Past Sales Chart ---
+            const pastSalesCtx = document.getElementById('pastSalesChart').getContext('2d');
+            new Chart(pastSalesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Total Spend (in ₹)',
+                        data: [10500, 12000, 15500, 18000],
+                        backgroundColor: '#0d9488', // teal-600
+                        borderColor: '#0f766e', // teal-700
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'Monthly Spend' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
