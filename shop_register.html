@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration - StreetFood Connect</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Use the Poppins font family */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <!-- Header -->
+    <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-amber-600">StreetFood Connect</a>
+            <nav class="flex space-x-4">
+                <a href="#" class="hover:text-amber-500 transition-colors font-medium">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-12">
+        <!-- Registration Form Section -->
+        <section id="shopkeeper-register" class="p-6">
+            <div class="container mx-auto max-w-2xl">
+                <div class="bg-white dark:bg-gray-800 p-8 md:p-12 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Register Your Shop</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-2">Join our network to connect with the best wholesalers.</p>
+                    </div>
+
+                    <form action="#" method="POST">
+                        <!-- Step 1: Account Information -->
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 border-b border-gray-300 dark:border-gray-600 pb-2 mb-6">Account Details</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="owner-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Full Name</label>
+                                    <input type="text" id="owner-name" name="owner-name" placeholder="e.g., Ramesh Kumar" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label for="phone-number" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Contact Number</label>
+                                    <input type="tel" id="phone-number" name="phone-number" placeholder="e.g., 9876543210" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                                    <input type="email" id="email" name="email" placeholder="you@example.com" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                                    <input type="password" id="password" name="password" placeholder="••••••••" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Shop & Product Details -->
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 border-b border-gray-300 dark:border-gray-600 pb-2 mb-6">Shop & Product Details</h2>
+                            <div class="grid grid-cols-1 gap-6">
+                                <div>
+                                    <label for="shop-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Shop Name</label>
+                                    <input type="text" id="shop-name" name="shop-name" placeholder="e.g., Gupta Chaat Corner" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label for="shop-address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Shop Address</label>
+                                    <input type="text" id="shop-address" name="shop-address" placeholder="Street Address, City, Pincode" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">What supplies do you need?</label>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700/50">
+                                            <input type="checkbox" name="supplies" value="produce" class="h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                            <span class="text-gray-700 dark:text-gray-300">Fresh Produce</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700/50">
+                                            <input type="checkbox" name="supplies" value="dairy" class="h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                            <span class="text-gray-700 dark:text-gray-300">Dairy Products</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700/50">
+                                            <input type="checkbox" name="supplies" value="spices" class="h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                            <span class="text-gray-700 dark:text-gray-300">Spices</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700/50">
+                                            <input type="checkbox" name="supplies" value="grains" class="h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                            <span class="text-gray-700 dark:text-gray-300">Grains & Flours</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700/50">
+                                            <input type="checkbox" name="supplies" value="oils" class="h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                            <span class="text-gray-700 dark:text-gray-300">Oils & Sauces</span>
+                                        </label>
+                                        <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-amber-50 dark:hover:bg-gray-700/50">
+                                            <input type="checkbox" name="supplies" value="packaging" class="h-5 w-5 rounded border-gray-300 text-amber-600 focus:ring-amber-500">
+                                            <span class="text-gray-700 dark:text-gray-300">Packaging</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submission -->
+                        <div class="mt-8 text-center">
+                            <button type="submit" class="w-full md:w-auto bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-10 rounded-lg transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-amber-500/50">
+                                Create My Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <p class="text-center mt-6 text-sm text-gray-600 dark:text-gray-400">
+                    Already have an account? <a href="#" class="font-medium text-amber-600 hover:underline">Log in here</a>.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6">
+        <div class="container mx-auto px-6 text-center text-gray-500 dark:text-gray-400">
+            <p>&copy; 2025 StreetFood Connect. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
